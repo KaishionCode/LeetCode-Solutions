@@ -9,29 +9,19 @@ class Solution:
     def createBinaryTree(self, descriptions: List[List[int]]) -> Optional[TreeNode]:
         nodes = {}
         children = set()
-        
-        # Bước 1: Duyệt qua các mô tả để tạo node và liên kết chúng
-        for parent_val, child_val, is_left in descriptions:
-            # Nếu node cha/con chưa tồn tại, ta tạo mới và lưu vào dictionary
+        for parent_val, children_val, is_left in descriptions:
             if parent_val not in nodes:
                 nodes[parent_val] = TreeNode(parent_val)
-            if child_val not in nodes:
-                nodes[child_val] = TreeNode(child_val)
-            
-            # Liên kết node con vào node cha tùy thuộc vào is_left
+            if children_val not in nodes:
+                nodes[children_val] = TreeNode(children_val)
             if is_left == 1:
-                nodes[parent_val].left = nodes[child_val]
-            else:
-                nodes[parent_val].right = nodes[child_val]
-                
-            # Ghi nhận node con vào set
-            children.add(child_val)
-            
-        # Bước 2: Tìm Node gốc (Root)
-        # Root là node duy nhất không xuất hiện trong tập hợp 'children'
-        for val in nodes:
-            if val not in children:
-                return nodes[val]
+                nodes[parent_val].left = nodes[children_val]
+            else: 
+                nodes[parent_val].right = nodes[children_val]
+            children.add(children_val)
+        for i in nodes:
+            if i not in children:
+                return nodes[i]
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
